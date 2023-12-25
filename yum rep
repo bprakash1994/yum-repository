@@ -1,0 +1,136 @@
+1) mount the RHEL/CentOS iso in local dir
+
+	e.g: mount -o loop /opt/rhel-server-6.1-x86_64-dvd.iso /mnt <<<<<  
+
+2) Remove/move the existing "*.repo" files from "/etc/yum.repos.d" directory
+3) Create your own repository file with extension as .repo(custom.repo)
+
+E.g: [root@localhost yum.repos.d]# cat custom.repo
+
+[customrepo]
+name=Custom Repository
+baseurl=file:///mnt 
+enabled=1
+gpgcheck=0
+gpgkey=file:///mnt/RPM-GPG-KEY-CentOS-6
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+for RHEL8.2: 
+
+vim rhel8.repo
+
+[InstallMedia-BaseOS]
+name=Red Hat Enterprise Linux 8 - BaseOS
+metadata_expire=-1
+gpgcheck=1
+enabled=1
+baseurl=file:///mnt/BaseOS/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+
+[InstallMedia-AppStream]
+name=Red Hat Enterprise Linux 8 - AppStream
+metadata_expire=-1
+gpgcheck=1
+enabled=1
+baseurl=file:///mnt/AppStream/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+
+
+[root@localhost yum.repos.d]# ls
+custom.repo
+
+4) Execute the following command to update the yum list,
+
+  "yum list"
+
+5) yum install <package-name>
+
+----------------------------------------------------------------------------------------------------------------------------
+RHEL8.0:
+-------
+
+[rhel8_BaseOS]
+ name=rhel8_BaseOS
+ baseurl=file:///mnt/BaseOS
+ enabled=1
+ gpgcheck=1
+ gpgkey=file:///mnt/RPM-GPG-KEY-redhat-release
+
+ [rhel8_AppStream]
+ name=rhel8_AppStream
+ baseurl=file:///mnt/AppStream
+ enabled=1
+ gpgcheck=1
+ gpgkey=file:///mnt/RPM-GPG-KEY-redhat-release
+
+
+
+
+============================================================================================================================================
+
+[root@cw-cpar1 yum.repos.d]# cat epel-testing.repo
+[epel-testing]
+name=Extra Packages for Enterprise Linux 7 - Testing - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/testing/7/$basearch
+metalink=https://mirrors.fedoraproject.org/metalink?repo=testing-epel7&arch=$basearch&infra=$infra&content=$contentdir
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+
+[epel-testing-debuginfo]
+name=Extra Packages for Enterprise Linux 7 - Testing - $basearch - Debug
+#baseurl=http://download.fedoraproject.org/pub/epel/testing/7/$basearch/debug
+metalink=https://mirrors.fedoraproject.org/metalink?repo=testing-debug-epel7&arch=$basearch&infra=$infra&content=$contentdir
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck=1
+
+[epel-testing-source]
+name=Extra Packages for Enterprise Linux 7 - Testing - $basearch - Source
+#baseurl=http://download.fedoraproject.org/pub/epel/testing/7/SRPMS
+metalink=https://mirrors.fedoraproject.org/metalink?repo=testing-source-epel7&arch=$basearch&infra=$infra&content=$contentdir
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck=1
+[root@cw-cpar1 yum.repos.d]#
+
+===================================================================================================================
+
+[root@cw-cpar1 yum.repos.d]# cat epel.repo
+[epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
+metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch&infra=$infra&content=$contentdir
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+
+[epel-debuginfo]
+name=Extra Packages for Enterprise Linux 7 - $basearch - Debug
+#baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch/debug
+metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-debug-7&arch=$basearch&infra=$infra&content=$contentdir
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck=1
+
+[epel-source]
+name=Extra Packages for Enterprise Linux 7 - $basearch - Source
+#baseurl=http://download.fedoraproject.org/pub/epel/7/SRPMS
+metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-source-7&arch=$basearch&infra=$infra&content=$contentdir
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck=1
+[root@cw-cpar1 yum.repos.d]#
+
+
+=================================================================================
+
+
